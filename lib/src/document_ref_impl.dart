@@ -1,8 +1,8 @@
-part of localstore;
+part of localfire;
 
 /// The interface that other DocumentRef must extend.
 abstract class DocumentRefImpl {
-  /// Gets a [CollectionRef] for the specified Localstore path.
+  /// Gets a [CollectionRef] for the specified localfire path.
   CollectionRef collection(String path);
 
   /// Sets data on the document, overwriting any existing data. If the document

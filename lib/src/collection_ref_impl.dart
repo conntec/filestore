@@ -1,4 +1,4 @@
-part of localstore;
+part of localfire;
 
 /// The interface that other CollectionRef must extend.
 abstract class CollectionRefImpl {

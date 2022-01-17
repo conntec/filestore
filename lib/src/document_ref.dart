@@ -1,6 +1,6 @@
-part of localstore;
+part of localfire;
 
-/// A [DocumentRef] refers to a document location in a [Localstore] database
+/// A [DocumentRef] refers to a document location in a [localfire] database
 /// and can be used to write, read, or listen to the location.
 ///
 /// The document at the referenced location may or may not exist.

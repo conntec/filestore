@@ -1,4 +1,4 @@
-part of localstore;
+part of localfire;
 
 /// A [CollectionRef] object can be used for adding documents, getting
 /// [DocumentRef]s, and querying for documents.
