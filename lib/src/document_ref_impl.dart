@@ -7,10 +7,11 @@ abstract class DocumentRefImpl {
 
   /// Sets data on the document, overwriting any existing data. If the document
   /// does not yet exist, it will be created.
-  ///
-  /// If [SetOptions] are provided, the data will be merged into an existing
   /// document instead of overwriting.
-  Future<dynamic> set(Map<String, dynamic> data, [SetOptions? options]);
+  Future<dynamic> set(Map<String, dynamic> data, {bool merge = false});
+
+  // Update the document referenced by this [DocumentRef].
+  Future<dynamic> update(Map<String, dynamic> data);
 
   /// Reads the document referenced by this [DocumentRef].
   Future<Map<String, dynamic>?> get();

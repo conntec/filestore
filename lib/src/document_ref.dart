@@ -33,20 +33,16 @@ class DocumentRef implements DocumentRefImpl {
   final Map<String, dynamic> _data = {};
 
   @override
-  Future<dynamic> set(Map<String, dynamic> data, [SetOptions? options]) async {
-    options ??= SetOptions();
-    if (options.merge) {
-      final output = Map<String, dynamic>.from(data);
-      Map<String, dynamic>? input = _data[id] ?? {};
-      output.updateAll((key, value) {
-        input![key] = value;
-      });
-      _data[id] = input;
-      _utils.set(data, path);
-    } else {
-      _data[id] = data;
-      _utils.set(data, path);
+  Future<dynamic> set(Map<String, dynamic> data, {bool merge = false}) async {
+    if (merge) {
+      final input = Map<String, dynamic>.from(data);
+      final current = await get();
+      if (current != null) {
+        data = deepMergeMap(current, input);
+      }
     }
+    _data[id] = data;
+    await _utils.set(data, path);
   }
 
   @override
@@ -68,5 +64,18 @@ class DocumentRef implements DocumentRefImpl {
   @override
   String toString() {
     return _utils.toString();
+  }
+
+  @override
+  Future update(Map<String, dynamic> data) async {
+    final input = Map<String, dynamic>.from(data);
+    final current = await get();
+    if (current != null) {
+      data = deepMergeMap(current, input);
+      _data[id] = data;
+      await set(data);
+    } else {
+      throw LocalFireErrors.DocumentNotFound;
+    }
   }
 }

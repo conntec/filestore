@@ -33,9 +33,15 @@ void main() {
       // expect(newDoc, expectedNewDoc);
     });
     test('creates and updates data', () async {
-      final data = {'uid': '8rvf1dfxw', 'displayName': 'Chuyen'};
-      final doc = db.collection('Users').doc();
-      doc.set(data);
+      Map<String, dynamic> data = {
+        'uid': '8rvf1dfxw',
+        'displayName': {'test': 'Chuyen'}
+      };
+      final doc = db.collection('Users').doc('002');
+      await doc.set(data, merge: true);
+      await doc.update({
+        'displayName': {'test1': '001'}
+      });
       final expectedDoc = db.collection('Users').doc(doc.id);
       expect(doc, expectedDoc);
       final expectedData = await doc.get();

@@ -6,6 +6,8 @@
 /// localfire library
 library localfire;
 
+import 'package:localfire/src/localfire_errors.dart';
+import 'package:localfire/src/utils/map_tools.dart';
 import 'package:path/path.dart' as p;
 import 'dart:math';
 
@@ -15,6 +17,5 @@ part 'src/collection_ref.dart';
 part 'src/collection_ref_impl.dart';
 part 'src/document_ref.dart';
 part 'src/document_ref_impl.dart';
-part 'src/set_option.dart';
 part 'src/localfire_base.dart';
 part 'src/localfire_impl.dart';
