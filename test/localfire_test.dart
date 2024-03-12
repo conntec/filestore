@@ -1,23 +1,22 @@
+import 'package:filestore/firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:localfire/localfire.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   group('localfire', () {
-    final db = LocalFire.instance;
+    final db = Filestore.instance;
     test('creates an instance', () {
-      expect(db, LocalFire.instance);
+      expect(db, Filestore.instance);
     });
     test('creates some collections and documents', () {
       final col = db.collection('mypath');
-      final expectedCol = LocalFire.instance.collection('mypath');
+      final expectedCol = Filestore.instance.collection('mypath');
       expect(col, expectedCol);
       final doc = db.collection('mypath').doc();
-      final expectedDoc = LocalFire.instance.collection('mypath').doc(doc.id);
+      final expectedDoc = Filestore.instance.collection('mypath').doc(doc.id);
       expect(doc, expectedDoc);
       final newCol = col.doc(doc.id).collection('childpath');
-      final expectedNewCol = LocalFire.instance
+      final expectedNewCol = Filestore.instance
           .collection('mypath')
           .doc(doc.id)
           .collection('childpath');

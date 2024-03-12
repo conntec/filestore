@@ -65,6 +65,7 @@ class Utils implements UtilsImpl {
   @override
   Future<dynamic>? set(Map<String, dynamic> data, String path) {
     _writeFile(data, path);
+    return null;
   }
 
   @override
@@ -167,6 +168,10 @@ class Utils implements UtilsImpl {
   }
 
   Directory? _docDir;
+
+  void setDocumentDir(Directory dir) {
+    _docDir = dir;
+  }
 
   Future<Directory> _getDocumentDir() async {
     try {

@@ -1,4 +1,4 @@
-part of localfire;
+part of filestore;
 
 /// The entry point for accessing a [localfire].
 ///
@@ -7,13 +7,17 @@ part of localfire;
 /// ```dart
 /// final db = localfire.instance;
 /// ```
-class LocalFire implements LocalFireImpl {
+class Filestore implements FilestoreImpl {
   final _delegate = DocumentRef._('');
-  LocalFire._();
-  static final LocalFire _localfire = LocalFire._();
+  Filestore._();
+  static final Filestore _localfire = Filestore._();
 
   /// Returns an instance using the default [localfire].
-  static LocalFire get instance => _localfire;
+  static Filestore get instance => _localfire;
+
+  void setDelegate(Directory dir) {
+    _delegate._utils.setDocumentDir(dir);
+  }
 
   @override
   CollectionRef collection(String path) {

@@ -1,4 +1,4 @@
-part of localfire;
+part of filestore;
 
 /// A [DocumentRef] refers to a document location in a [localfire] database
 /// and can be used to write, read, or listen to the location.
@@ -75,7 +75,7 @@ class DocumentRef implements DocumentRefImpl {
       _data[id] = data;
       await set(data);
     } else {
-      throw LocalFireErrors.DocumentNotFound;
+      throw FilestoreErrors.DocumentNotFound;
     }
   }
 }
