@@ -1,4 +1,4 @@
-import 'package:filestore/firestore.dart';
+import 'package:filestore/filestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -7,6 +7,14 @@ void main() {
     final db = Filestore.instance;
     test('creates an instance', () {
       expect(db, Filestore.instance);
+    });
+
+    test('date teste', () async {
+      final doc = db.collection("mypath").doc("mydoc");
+      await doc.set({"date": DateTime.now()});
+      final data = await doc.get();
+      expect(data, isA<Map<String, dynamic>>());
+      expect(data!['date'], isA<DateTime>());
     });
     test('creates some collections and documents', () {
       final col = db.collection('mypath');
