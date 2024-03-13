@@ -20,7 +20,6 @@ void main() {
         'id': '0001',
         'displayName': {'test': 'Chuyen'},
         'value': 'teste',
-        'date': DateTime.now(),
       };
       await doc.set(data);
       expect(await File(join(rootPath.absolute.path, "Users", "000")).exists(),
@@ -33,7 +32,7 @@ void main() {
         'id': '0001',
         'displayName': {'test': 'Chuyen'},
         'value': 'teste',
-        'date': DateTime.now(),
+        'date': DateTime.now().toIso8601String(),
       };
       await doc.set(data);
       final expectedData = await doc.get();
