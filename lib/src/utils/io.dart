@@ -4,13 +4,12 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:filestore/src/utils/map_tools.dart';
-import 'package:path/path.dart';
 
 import 'utils_impl.dart';
 
 class Utils implements UtilsImpl {
   Utils._() {
-    _getDocumentDir().then((value) => _docDir = value);
+    _docDir = _getDocumentDir();
   }
   static final Utils _utils = Utils._();
   static Utils get instance => _utils;
@@ -174,11 +173,9 @@ class Utils implements UtilsImpl {
     _docDir = dir;
   }
 
-  Future<Directory> _getDocumentDir() async {
+  Directory _getDocumentDir() {
     try {
-      var dir =
-          await Directory(join(Directory.current.absolute.path, 'filestore'))
-              .create();
+      var dir = Directory.current.absolute;
       return dir;
     } catch (error) {
       rethrow;
