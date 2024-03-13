@@ -15,7 +15,7 @@ class Filestore implements FilestoreImpl {
   /// Returns an instance using the default [localfire].
   static Filestore get instance => _localfire;
 
-  void setDelegate(Directory dir) {
+  void setRootPath(Directory dir) {
     _delegate._utils.setDocumentDir(dir);
   }
 

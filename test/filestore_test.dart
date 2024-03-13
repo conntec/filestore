@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:filestore/filestore.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:path/path.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -9,35 +12,32 @@ void main() {
       expect(db, Filestore.instance);
     });
 
-    test('date teste', () async {
-      final doc = db.collection("mypath").doc("mydoc");
-      await doc.set({"date": DateTime.now()});
-      final data = await doc.get();
-      expect(data, isA<Map<String, dynamic>>());
-      expect(data!['date'], isA<DateTime>());
+    test('change the root path', () async {
+      final rootPath = Directory('./db_test');
+      db.setRootPath(rootPath);
+      final doc = db.collection('Users').doc('000');
+      final data = {
+        'id': '0001',
+        'displayName': {'test': 'Chuyen'},
+        'value': 'teste',
+        'date': DateTime.now(),
+      };
+      await doc.set(data);
+      expect(await File(join(rootPath.absolute.path, "Users", "000")).exists(),
+          true);
     });
-    test('creates some collections and documents', () {
-      final col = db.collection('mypath');
-      final expectedCol = Filestore.instance.collection('mypath');
-      expect(col, expectedCol);
-      final doc = db.collection('mypath').doc();
-      final expectedDoc = Filestore.instance.collection('mypath').doc(doc.id);
-      expect(doc, expectedDoc);
-      final newCol = col.doc(doc.id).collection('childpath');
-      final expectedNewCol = Filestore.instance
-          .collection('mypath')
-          .doc(doc.id)
-          .collection('childpath');
-      expect(newCol, expectedNewCol);
-      expect(newCol.parent, col);
-      expect(newCol.parent?.path, col.path);
-      final newDoc = newCol.doc('8rvf1dfxw');
-      // final expectedNewDoc = db
-      //     .collection('mypath')
-      //     .doc(doc.id)
-      //     .collection('childpath')
-      //     .doc('8rvf1dfxw');
-      // expect(newDoc, expectedNewDoc);
+
+    test('date format save', () async {
+      final doc = db.collection('Users').doc('001');
+      final data = {
+        'id': '0001',
+        'displayName': {'test': 'Chuyen'},
+        'value': 'teste',
+        'date': DateTime.now(),
+      };
+      await doc.set(data);
+      final expectedData = await doc.get();
+      expect(data, expectedData);
     });
     test('creates and updates data', () async {
       Map<String, dynamic> data = {

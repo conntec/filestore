@@ -41,7 +41,7 @@ Map<String, dynamic> decodeDateInMap(Map<String, dynamic> map) =>
     });
 
 Map<String, dynamic> jsonToMap(String input) =>
-    encodeDateInMap(json.decode(input));
+    encodeDateInMap(jsonDecode(input));
 
 String mapToJson(Map<String, dynamic> input) =>
-    json.encode(encodeDateInMap(input));
+    jsonEncode(encodeDateInMap(input));

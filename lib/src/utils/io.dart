@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:path_provider/path_provider.dart';
+import 'package:filestore/src/utils/map_tools.dart';
+import 'package:path/path.dart';
 
 import 'utils_impl.dart';
 
@@ -145,7 +146,7 @@ class Utils implements UtilsImpl {
     file.readIntoSync(buffer);
     try {
       final contentText = utf8.decode(buffer);
-      final _data = json.decode(contentText) as Map<String, dynamic>;
+      final _data = jsonToMap(contentText);
       return _data;
     } catch (e) {
       return e;
@@ -175,7 +176,9 @@ class Utils implements UtilsImpl {
 
   Future<Directory> _getDocumentDir() async {
     try {
-      var dir = await getApplicationSupportDirectory();
+      var dir =
+          await Directory(join(Directory.current.absolute.path, 'filestore'))
+              .create();
       return dir;
     } catch (error) {
       rethrow;
@@ -183,7 +186,7 @@ class Utils implements UtilsImpl {
   }
 
   Future _writeFile(Map<String, dynamic> data, String path) async {
-    final serialized = json.encode(data);
+    final serialized = mapToJson(data);
     final buffer = utf8.encode(serialized);
     final file = await _getFile(path);
     final _file = file!.openSync(mode: FileMode.append);
