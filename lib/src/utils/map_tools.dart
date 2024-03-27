@@ -1,21 +1,17 @@
 import 'dart:convert';
 
 Map<String, dynamic> deepMergeMap(
-    Map<String, dynamic> a, Map<String, dynamic> b) {
-  b.forEach((k, v) {
-    if (!a.containsKey(k)) {
-      a[k] = v;
-    } else {
-      if (a[k] is Map) {
-        deepMergeMap(
-            Map<String, dynamic>.from(a[k]), Map<String, dynamic>.from(b[k]));
-      } else {
-        a[k] = b[k];
-      }
-    }
-  });
-
-  return a;
+  Map<String, dynamic> object,
+  Map<String, dynamic> other,
+) {
+  return {
+    ...object,
+    for (var entry in other.entries)
+      entry.key: object[entry.key] is Map<String, dynamic> &&
+              entry.value is Map<String, dynamic>
+          ? deepMergeMap(object[entry.key], entry.value)
+          : entry.value
+  };
 }
 
 Map<String, dynamic> jsonToMap(String input) => jsonDecode(input);
